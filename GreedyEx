@@ -41,7 +41,7 @@ public static void main(String[] args) {
 	System.out.println(result);
 	afterTime = System.currentTimeMillis();
 	long secDiffTime = (afterTime - beforeTime)/1000;
-	System.out.println(secDiffTime);
+	System.out.println(secDiffTime); 
 }
 
 }
