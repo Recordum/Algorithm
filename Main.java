@@ -1,13 +1,15 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 class Solution {
     static int[] number = { -2,3,0,2,-5};
     static int answer = 0;
+    static int count;
 
-    static ArrayList<Integer> list = new ArrayList<>();
+    static LinkedList<Integer> list = new LinkedList<>();
 
     public static void recursion(int start){
-        if(list.size() == 3){
+        if(count == 3){
             int result = list.get(0) +list.get(1)+list.get(2);
             if(result == 0){
                 answer++;
@@ -16,9 +18,11 @@ class Solution {
         }
         for( int i = start ; i < number.length; i++){
 
-            list.add(number[i]);
+            list.offer(number[i]);
             start++;
+            count++;
             recursion(start);
+            count--;
         }
 
 
