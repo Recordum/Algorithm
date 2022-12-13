@@ -37,5 +37,5 @@ public class Main {
             count += (size * size / 4) * 3;
             find(size/2, r - size/2, c - size/2);
         }
-    }
+    } 
 }
