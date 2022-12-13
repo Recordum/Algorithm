@@ -1,29 +1,41 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    int count = 0;
-    public static void dfs(int[][] array, int N){
-        int start = 0;
-        int[] dx = {2^(N-1),-2^(N-1),2^(N-1)};
-        int[] dy = {0,2^(N-1),0};
-        int x = 0;
-        int y = 0;
-        for(int i = 0; i< 3; i++){
-            if(array[x + dx[i]][y + dy[i]] == 0){
-                array[x + dx[i]][y + dy[i]] = 1;
-                count ++;
-            }
-        }
-        array[0][0] = 1;
+    static int count = 0;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int r = Integer.parseInt(st.nextToken()); //행
+        int c = Integer.parseInt(st.nextToken()); //열
+        int size = (int) Math.pow(2, N); //한 변의 사이즈
+
+        find(size, r, c);
+        System.out.println(count);
     }
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int N = scanner.nextInt();
-        int r = scanner.nextInt();
-        int c = scanner.nextInt();
 
-        int[][] array = new int[2^N][2^N];
+    private static void find(int size, int r, int c) {
+        if(size == 1)
+            return;
 
-        dfs(array)
+        if(r < size/2 && c < size/2) {
+            find(size/2, r, c);
+        }
+        else if(r < size/2 && c >= size/2) {
+            count += size * size / 4;
+            find(size/2, r, c - size/2);
+        }
+        else if(r >= size/2 && c < size/2) {
+            count += (size * size / 4) * 2;
+            find(size/2, r - size/2, c);
+        }
+        else {
+            count += (size * size / 4) * 3;
+            find(size/2, r - size/2, c - size/2);
+        }
     }
 }
