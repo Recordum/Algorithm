@@ -29,7 +29,7 @@ public class Main {
                 result = target;
                 return;
             }
-
+ 
     }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
