@@ -40,18 +40,21 @@ class Node implements Comparable<Node>{
 
     @Override
     public int compareTo(Node o) {
-        if(this.x > o.getX()){
+        if(this.y > o.getY()){
             return 1;
-        } else if (this.x < o.getX()) {
+        } else if (this.y < o.getY()) {
             return -1;
+        } else if (this.x > o.getX()) {
+            return 1;
         } else {
-            return 0;
+            return -1;
         }
     }
 }
 
 public class Main {
     static ArrayList<Node> timeList = new ArrayList<>();
+    static boolean[] check = new boolean[11];
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Integer> startList = new ArrayList<>();
@@ -61,21 +64,24 @@ public class Main {
         for(int i = 0 ; i < n ; i ++){
             int startTime = scanner.nextInt();
             int endTime = scanner.nextInt();
-            startList.add(startTime);
             timeList.add(new Node(startTime, endTime));
         }
         Collections.sort(timeList);
-        Collections.sort(startList);
-        for(int i = 0; i < n ; i++) {
-           int end = timeList.get(i).getY();
-           binarySearch(startList, timeList.get(i).getX(), end);
-        }
-    }
 
-    private static void binarySearch(ArrayList<Integer> startList, int x, int end) {
-        
+        int end = timeList.get(0).getY();
+        int count = 1;
+
+        for(int i = 1 ; i < n ; i ++) {
+            if (end <= timeList.get(i).getX()) {
+                end = timeList.get(i).getY();
+                count ++;
+            }
+        }
+        System.out.println(count);
     }
 }
+
+
 
 
 
