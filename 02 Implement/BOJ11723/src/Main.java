@@ -1,73 +1,80 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    static ArrayList<ArrayList<Integer>> setList = new ArrayList<>();
-    static ArrayList<Integer> outputList = new ArrayList<>();
+    static ArrayList<Integer> setList = new ArrayList<>();
+    static StringBuilder outputList = new StringBuilder();
 
     public static void set(String function, int element){
+        switch (function) {
 
-        if(function.equals("add")){
-            if (setList.get(element).size() != 0) {
-                setList.get(element).add(element);
-            }
-            return;
-        }
-        if(function.equals("remove")){
-            if (setList.get(element).size() != 0) {
-                setList.get(element).remove(0);
-            }
-            return;
-        }
-        if(function.equals("check")){
-            if(setList.get(element).size() != 0){
-                outputList.add(1);
-            }else{
-                outputList.add(0);
-            }
-            return;
-        }
-        if(function.equals("toggle")){
-            if(setList.get(element).size() != 0){
-                setList.get(element).add(element);
-            }else{
-                setList.get(element).remove(0);
-            }
-            return;
-        }
-        if(function.equals("all")){
-            for(int i = 1 ;i < 21 ; i++){
-                setList.get(i).add(0, i);
-            }
-        }
-        if(function.equals("empty")){
-            for(int i = 1 ;i < 21 ; i++){
-                setList.get(i).remove(0);
-            }
+            case "add" :
+                setList.set(element, 1);
+                break;
+
+            case "remove" :
+                setList.set(element,0);
+                break;
+
+            case "check" :
+                if (setList.get(element) == 0) {
+                    outputList.append("0\n");
+                } else {
+                    outputList.append("1\n");
+                }
+                break;
+
+            case "toggle" :
+                if (setList.get(element) == 0) {
+                    setList.set(element,1);
+                } else {
+                    setList.set(element,0);
+                }
+                break;
+
+            case "all" :
+                for (int i = 1; i < 21; i++) {
+                    if (setList.get(i) == 0) {
+                        setList.set(i, 1);
+                    }
+                }
+                break;
+
+            case "empty" :
+                for (int i = 1; i < 21; i++) {
+                    if (setList.get(i) != 0) {
+                        setList.set(i, 0);
+                    }
+                }
+
         }
     }
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
         for(int i = 0 ; i < 21 ; i++){
-            setList.add(new ArrayList<Integer>());
+            setList.add(0);
         }
         for(int i = 0 ; i < n ; i++){
-            String function = scanner.next();
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String function = st.nextToken();
             if(function.equals("all") || function.equals("empty")){
                 set(function,0);
                 continue;
             }
-            int element = scanner.nextInt();
+            int element = Integer.parseInt(st.nextToken());
             set(function,element);
 
         }
-        for(int i = 0 ; i< outputList.size() ; i++) {
-            System.out.println(outputList.get(i));
-        }
+        System.out.println(outputList);
     }
 }
